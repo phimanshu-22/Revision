@@ -1,0 +1,85 @@
+task: pinn_basic
+exp_name: pinn_basic
+net_name: gabor
+tensorboard_root: /PINNgabor/exp/tensorboard/
+task_type: train
+loss_type: implicit
+results_path: results/${net_name}/${exp_name}-${now:%Y-%m-%d-%H-%M-%S.%fZ}/
+checkpoint_path: ${results_path}/checkpoints/
+visualize_path: ${results_path}/vis/
+code_path: ${results_path}/code/
+tensorboard_path: results/tb/${exp_name}-${net_name}-${now:%Y-%m-%d-%H-%M-%S.%fZ}
+pinn:
+  device: cuda:0
+  seed: 9999
+  ub:
+  - 1.0
+  - 1.0
+  - 0.0
+  lb:
+  - -1.0
+  - -1.0
+  - 0.0
+  fre: 4.0
+  pre_train_fre: 4.0
+  model_type: pinn
+  model_name: layer
+  step_size: 50000
+  gamma: 0.6
+  nx: 101
+  nz: 101
+  n_batches: 1
+  lr: 0.001
+  vmin: -0.6
+  vmax: 0.6
+  epochs: 50000
+  axisx: 2.5
+  axisz: 2.5
+  fine_ratio: 1
+  split: 4
+  check_point: 0
+  out_channels: 1
+  hidden_layers:
+  - 256
+  - 256
+  - 256
+  scale: 32.0
+  alpha: 1.0
+  beta: 1.0
+  last_layer_type: 0
+  state_dict_file: None
+  print_loss_every: 100
+  save_model_every: 1000
+  test_every: 100
+  data_root_path: /home/phimanshu/Documents/pinngabor/data/
+  add_number: 0
+  add_factor: -1.0
+  regularization: 1.0
+  pde_loss_penelty: -1.0
+  regular_v: 1.5
+  derivate_type: ad
+  split_only: false
+  check: false
+  train_flag: true
+  adam: true
+  lbfgs: false
+  multi_card: false
+  encoding_config:
+    encoding_type: -1
+    embed_dim: 3
+    multires: 2
+    n_levels: 6
+    n_features_per_level: 2
+    log2_hashmap_size: 8
+    base_res: 4
+    finest_res: 512
+    bounding_box:
+    - - -1.0
+      - -1.0
+      - -1.0
+    - - 1.0
+      - 1.0
+      - 1.0
+
+MACs: 201.73 KMac, Params: 205.82 k
+Epoch 0: loss=4.733e+06, pde=4.733e+06, bc=4.806e-04, ic=3.183e+00, L2=9.999e-01
